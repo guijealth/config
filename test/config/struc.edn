@@ -5,4 +5,8 @@
   [:offset {:env "DQP_OFFSET", :of-type :cfg/integer}]
   [:limit {:env "DQP_LIMIT", :of-type :cfg/integer}]
   [:safe {:env "DQP_SAFE_BY_DEFAULT", :of-type :cfg/boolean}]
-  [:timeout {:env "DQP_TIMEOUT", :of-type :cfg/decimal}]]]
+  [:timeout {:env "DQP_TIMEOUT", :of-type :cfg/decimal}]]
+ [:some
+  [:nested
+   [:foo {:env "FOO" :of-type :cfg/string}]
+   [:home {:env "HOME" :of-type :cfg/string}]]]]

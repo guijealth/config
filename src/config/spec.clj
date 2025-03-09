@@ -1,5 +1,6 @@
 (ns config.spec
   (:require
+   [clojure.string :as str]
    [clojure.spec.alpha :as s]
    [clojure.zip :as zip]))
 
@@ -48,6 +49,15 @@
     (when (map? attrs)
       attrs)))
 
+(defn identity-struc [environment]
+  (->> (for [k (keys environment)]
+         [(-> (name k)
+              (str/replace #"_" "-")
+              (str/lower-case)
+              (keyword))
+          {:env (name k) :of-type :cfg/string}])
+       (into [])))
+
 (comment
 
   (s/conform :cfg/boolean "true")
@@ -81,9 +91,8 @@
        (take-while (complement zip/end?))
        (map (fn [loc]
               (let [n (zip/node loc)]
-                [(spec-key n) 
-                 (-> n spec-attrs :of-type)
-                 (zip/path loc)]))))
+                [(spec-key n)
+                 (-> n spec-attrs :of-type)]))))
   ;;=> ([nil nil]
   ;;    [:api nil]
   ;;    [:base-url :cfg/url]
@@ -93,5 +102,21 @@
   ;;    [:limit :cfg/integer]
   ;;    [:safe :cfg/boolean]
   ;;    [:timeout :cfg/decimal])
+
+  (identity-struc {:BASE_URL "http://localhost:8080/fake/url",
+                   :AUTH
+                   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
+                   :DQP_OFFSET "0",
+                   :DQP_LIMIT "128",
+                   :DQP_SAFE_BY_DEFAULT "true",
+                   :DQP_TIMEOUT "60000",
+                   :FOO "bar"})
+  ;;=> [[:base-url {:env "BASE_URL", :of-type :cfg/string}]
+  ;;    [:auth {:env "AUTH", :of-type :cfg/string}]
+  ;;    [:dqp-offset {:env "DQP_OFFSET", :of-type :cfg/string}]
+  ;;    [:dqp-limit {:env "DQP_LIMIT", :of-type :cfg/string}]
+  ;;    [:dqp-safe-by-default {:env "DQP_SAFE_BY_DEFAULT", :of-type :cfg/string}]
+  ;;    [:dqp-timeout {:env "DQP_TIMEOUT", :of-type :cfg/string}]
+  ;;    [:foo {:env "FOO", :of-type :cfg/string}]]
 
   :.)
