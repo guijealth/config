@@ -1,0 +1,8 @@
+[[:api
+  [:base-url {:env "BASE_URL", :of-type :cfg/url}]
+  [:auth {:env "AUTH", :of-type :cfg/string}]]
+ [:default-query-params
+  [:offset {:env "DQP_OFFSET", :of-type :cfg/integer}]
+  [:limit {:env "DQP_LIMIT", :of-type :cfg/integer}]
+  [:safe {:env "DQP_SAFE_BY_DEFAULT", :of-type :cfg/boolean}]
+  [:timeout {:env "DQP_TIMEOUT", :of-type :cfg/decimal}]]]
