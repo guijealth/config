@@ -19,8 +19,8 @@
          (into {}))))
 
 (comment
-  
-  (parse ".env")
+
+  (parse "test/config/data/.env")
   ;;=> {:BASE_URL "http://localhost:8080/fake/url",
   ;;    :AUTH
   ;;    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
@@ -28,5 +28,5 @@
   ;;    :DQP_LIMIT "128",
   ;;    :DQP_SAFE_BY_DEFAULT "true",
   ;;    :DQP_TIMEOUT "60000"}
-  
+
   :.)

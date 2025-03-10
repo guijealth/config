@@ -54,7 +54,7 @@
        [:home {:env "HOME" :of-type :cfg/string}]]]])
 
   (-> {}
-      (patch (dotenv/parse ".env") struc)
+      (patch (dotenv/parse "test/config/data/.env") struc)
       (patch (sysenv/read-all) struc))
   ;;=> {:api
   ;;    {:base-url "http://localhost:8080/fake/url",

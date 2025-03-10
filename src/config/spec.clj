@@ -84,7 +84,7 @@
   (s/conform :cfg/string "John")
   ;;=> "John"
 
-  (->> (slurp "test/config/struc.edn")
+  (->> (slurp "test/config/data/struc.edn")
        (read-string)
        (spec-zip)
        (iterate zip/next)
